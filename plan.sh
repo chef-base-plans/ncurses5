@@ -58,13 +58,9 @@ do_install() {
   # properly
   #
   # Thanks to: http://clfs.org/view/sysvinit/x86_64-64/final-system/ncurses.html
-  local maj maj_min
-  maj=$(echo ${pkg_version} | cut -d "." -f 1)
-  maj_min=$(echo ${pkg_version} | cut -d "." -f 1-2)
   for x in curses ncurses form panel menu tinfo; do
     ln -sv lib${x}w.so "$pkg_prefix/lib/lib${x}.so"
-    ln -sv lib${x}w.so "$pkg_prefix/lib/lib${x}.so.$maj"
-    ln -sv lib${x}w.so "$pkg_prefix/lib/lib${x}.so.$maj_min"
+    ln -sv lib${x}w.so "$pkg_prefix/lib/lib${x}.so.5"
     ln -sv ${x}w.pc "$pkg_prefix/lib/pkgconfig/${x}.pc"
   done
   ln -sfv libncursesw.so "$pkg_prefix/lib/libcursesw.so"
@@ -76,7 +72,6 @@ do_install() {
   # shellcheck disable=SC2016
   grep -B 100 '$Id' README > "$pkg_prefix/share/licenses/LICENSE"
 }
-
 
 # ----------------------------------------------------------------------------
 # **NOTICE:** What follows are implementation details required for building a
